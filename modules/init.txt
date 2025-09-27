@@ -13,28 +13,15 @@
 # - lua files are loaded at runtime by the main program.
 # - sql files are loaded either by dbtool, or by hand.
 #
-# Examples:
-#
-# init.txt:
 # ---------------------
-# | 
-# | renamer
-# | 
+# |  CPP Modules
 # ---------------------
-#
-# Will load everything under the renamer folder.
-#
-# init.txt:
+FFXI-Modules/cpp/
 # ---------------------
-# | 
-# | custom/cpp/custom_module.cpp
-# | custom/lua/claim_shield.lua
-# |
+# |  LUA Modules
 # ---------------------
-#
-# Will load only custom/cpp/custom_module.cpp and custom/lua/claim_shield.lua.
-#
-# Live example:
-
-custom/commands/
-custom/lua/test_npcs_in_gm_home.lua
+FFXI-Modules/lua/
+# ---------------------
+# |  SQLModules
+# ---------------------
+FFXI-Modules/sql/
