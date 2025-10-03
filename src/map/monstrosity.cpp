@@ -35,12 +35,12 @@
 #include "lua/luautils.h"
 
 #include "packets/char_abilities.h"
-#include "packets/char_appearance.h"
 #include "packets/char_job_extra.h"
 #include "packets/char_jobs.h"
 #include "packets/char_stats.h"
 #include "packets/monipulator1.h"
 #include "packets/monipulator2.h"
+#include "packets/s2c/0x051_grap_list.h"
 
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
@@ -113,8 +113,8 @@ void monstrosity::LoadStaticData()
                     .monstrosityId          = rset->get<uint8>("monstrosity_id"),
                     .monstrositySpeciesCode = monstrositySpeciesCode,
                     .name                   = rset->get<std::string>("name"),
-                    .mjob                   = static_cast<JOBTYPE>(rset->get<uint8>("mjob")),
-                    .sjob                   = static_cast<JOBTYPE>(rset->get<uint8>("sjob")),
+                    .mjob                   = rset->get<JOBTYPE>("mjob"),
+                    .sjob                   = rset->get<JOBTYPE>("sjob"),
                     .size                   = rset->get<uint8>("size"),
                     .look                   = rset->get<uint16>("look"),
                 };
@@ -145,7 +145,7 @@ void monstrosity::LoadStaticData()
         {
             while (rset->next())
             {
-                const auto mod = static_cast<Mod>(rset->get<uint16>("modId"));
+                const auto mod = rset->get<Mod>("modId");
                 const auto val = rset->get<int16>("value");
                 entry.mods.emplace_back(mod, val);
             }
@@ -377,7 +377,7 @@ void monstrosity::SendFullMonstrosityUpdate(CCharEntity* PChar)
     PChar->pushPacket<CCharJobsPacket>(PChar);
     PChar->pushPacket<CCharJobExtraPacket>(PChar, true);
     PChar->pushPacket<CCharJobExtraPacket>(PChar, false);
-    PChar->pushPacket<CCharAppearancePacket>(PChar);
+    PChar->pushPacket<GP_SERV_COMMAND_GRAP_LIST>(PChar);
     PChar->pushPacket<CCharStatsPacket>(PChar);
     PChar->pushPacket<CCharAbilitiesPacket>(PChar);
 
